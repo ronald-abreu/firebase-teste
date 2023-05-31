@@ -29,45 +29,42 @@ class _CadastroScreenState extends State<CadastroScreen> {
         );
       },
     );
+    Navigator.pop(context);
+    if (senhaController.text != confirmSenhaController.text) {
+      Navigator.pop(context);
+      showMessage("Senhas não coincidem");
+      return;
+    }
 
     try {
-      if (senhaController.text == confirmSenhaController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: senhaController.text,
-        );
-      } else {
-        passwordDontMatch();
-      }
+      senhaController.text == confirmSenhaController.text;
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: senhaController.text,
+      );
 
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
-      if (e.code == 'user-not-found') {
-        wrongData();
-      } else if (e.code == 'wrong-password') {
-        wrongData();
+      if (e.code == 'weak-password') {
+        showMessage('Senha Fraca');
+      } else if (e.code == 'email-already-in-use') {
+        showMessage('Email ja em uso');
       }
     }
   }
 
-  void wrongData() {
+  void showMessage(String message) {
     showDialog(
       context: context,
       builder: (context) {
-        return const AlertDialog(
-          title: Text('Email ou senha incorretos'),
-        );
-      },
-    );
-  }
-
-  void passwordDontMatch() {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const AlertDialog(
-          title: Text('Senhas não conferem'),
+        return AlertDialog(
+          title: Center(
+            child: Text(
+              message,
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
         );
       },
     );
@@ -90,7 +87,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
             TextFormField(
               controller: senhaController,
               obscureText: false,
-              decoration: InputDecoration(labelText: 'Senha'),
+              decoration: InputDecoration(labelText: 'Senha (mín. 6 dígitos)'),
             ),
             TextFormField(
               controller: confirmSenhaController,

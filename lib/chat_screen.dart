@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -9,11 +8,21 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  TextEditingController messageController = TextEditingController();
   List<String> messages = [];
 
-  void sendMessage(String message) {
+  @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
+  }
+
+  void sendMessage() {
+    String message = messageController.text;
+
     setState(() {
       messages.add(message);
+      messageController.clear();
     });
   }
 
@@ -55,16 +64,12 @@ class _ChatScreenState extends State<ChatScreen> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    controller: messageController,
                     decoration: InputDecoration(labelText: 'Mensagem'),
-                    onFieldSubmitted: (value) {
-                      sendMessage(value);
-                    },
                   ),
                 ),
                 IconButton(
-                  onPressed: () {
-                    // Lógica de envio de mensagem aqui
-                  },
+                  onPressed: sendMessage,
                   icon: Icon(Icons.send),
                 ),
               ],
