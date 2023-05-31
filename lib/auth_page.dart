@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:zapzap2/chat_screen.dart';
 import 'package:zapzap2/login_screen.dart';
 
+import 'login_or_register.dart';
+
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
 
@@ -19,7 +21,7 @@ class AuthPage extends StatelessWidget {
 
           //usuário não logado
           else {
-            return LoginScreen();
+            return LoginOrRegisterScreen();
           }
         },
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,7 +8,8 @@ import 'chat_screen.dart';
 import 'cadastro_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  final Function()? onTap;
+  const LoginScreen({super.key, required this.onTap});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -67,11 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
           children: [
             TextFormField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Usuário'),
+              obscureText: false,
+              decoration: InputDecoration(labelText: 'Email'),
             ),
             TextFormField(
               controller: senhaController,
-              obscureText: true,
+              obscureText: false,
               decoration: InputDecoration(labelText: 'Senha'),
             ),
             SizedBox(height: 16),
@@ -84,7 +87,10 @@ class _LoginScreenState extends State<LoginScreen> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => CadastroScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => CadastroScreen(
+                            onTap: () {},
+                          )),
                 );
               },
               child: Text('Cadastrar'),
