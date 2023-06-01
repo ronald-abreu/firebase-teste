@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-import 'chat_screen.dart';
-import 'cadastro_screen.dart';
 
 class CadastroScreen extends StatefulWidget {
   final Function()? onTap;
@@ -24,7 +19,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
     showDialog(
       context: context,
       builder: (context) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(),
         );
       },
@@ -62,7 +57,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
           title: Center(
             child: Text(
               message,
-              style: TextStyle(color: Colors.black),
+              style: const TextStyle(color: Colors.black),
             ),
           ),
         );
@@ -74,7 +69,7 @@ class _CadastroScreenState extends State<CadastroScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tela de Cadastro'),
+        title: const Text('Tela de Cadastro'),
       ),
       body: Center(
         child: Column(
@@ -82,24 +77,24 @@ class _CadastroScreenState extends State<CadastroScreen> {
           children: [
             TextFormField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Email'),
             ),
             TextFormField(
               controller: senhaController,
               obscureText: false,
-              decoration: InputDecoration(labelText: 'Senha (mín. 6 dígitos)'),
+              decoration: const InputDecoration(labelText: 'Senha (mín. 6 dígitos)'),
             ),
             TextFormField(
               controller: confirmSenhaController,
               obscureText: false,
-              decoration: InputDecoration(labelText: 'Confirmar Senha'),
+              decoration: const InputDecoration(labelText: 'Confirmar Senha'),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: cadastro,
-              child: Text('Confirmar'),
+              child: const Text('Confirmar'),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
           ],
         ),
       ),

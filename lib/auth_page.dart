@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zapzap2/chat_screen.dart';
-import 'package:zapzap2/login_screen.dart';
 
 import 'login_or_register.dart';
 
@@ -16,7 +15,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           // usuário logado
           if (snapshot.hasData) {
-            return ChatScreen();
+            return const ChatScreen();
           }
 
           //usuário não logado

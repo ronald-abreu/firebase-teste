@@ -1,23 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController messageController = TextEditingController();
+  final messageController = TextEditingController();
+  final emailController = TextEditingController();
   List<String> messages = [];
 
   @override
   void dispose() {
     messageController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
+  Future pegarDados(String message, String user) async {
+    await FirebaseFirestore.instance.collection('mensagens').add({
+      'message': message,
+    });
+  }
+
   void sendMessage() {
+    pegarDados(messageController.text.trim(), emailController.text.trim());
     String message = messageController.text;
 
     setState(() {
@@ -37,10 +48,10 @@ class _ChatScreenState extends State<ChatScreen> {
         actions: [
           IconButton(
             onPressed: LogOut,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
           )
         ],
-        title: Text('Tela de Chat'),
+        title: const Text('Tela de Chat'),
       ),
       body: Column(
         children: [
@@ -51,26 +62,26 @@ class _ChatScreenState extends State<ChatScreen> {
               itemBuilder: (context, index) {
                 final message = messages[index];
                 return ListTile(
-                  leading: Icon(Icons.person),
+                  leading: const Icon(Icons.person),
                   title: Text(message),
                 );
               },
             ),
           ),
-          Divider(),
+          const Divider(),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               children: [
                 Expanded(
                   child: TextFormField(
                     controller: messageController,
-                    decoration: InputDecoration(labelText: 'Mensagem'),
+                    decoration: const InputDecoration(labelText: 'Mensagem'),
                   ),
                 ),
                 IconButton(
                   onPressed: sendMessage,
-                  icon: Icon(Icons.send),
+                  icon: const Icon(Icons.send),
                 ),
               ],
             ),
